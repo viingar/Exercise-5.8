@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class Weather {
-    private Main main;
-
-    private Wind wind;
+    public int id;
+    public String main;
+    public String description;
+    public String icon;
     
 
 }

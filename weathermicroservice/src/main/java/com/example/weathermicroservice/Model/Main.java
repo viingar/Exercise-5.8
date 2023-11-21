@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Main {
 
-    private double temp;
-    private double humidity;
-    private double pressure;
-    private double temp_max;
-    private double sea_level;
-    private double grnd_level;
-    private double feels_like;
-
+    public double temp;
+    public double feels_like;
+    public double temp_min;
+    public double temp_max;
+    public int pressure;
+    public int humidity;
+    public int sea_level;
+    public int grnd_level;
 
 }

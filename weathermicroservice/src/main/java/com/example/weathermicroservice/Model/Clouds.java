@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Wind {
-    private double speed;
-    private int deg;
-    private double gust;
+@Data
+public class Clouds {
+    public int all;
 }

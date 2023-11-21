@@ -1,34 +1,54 @@
 package com.example.weathermicroservice.Controller;
 
-import com.example.weathermicroservice.Model.Weather;
-import com.example.weathermicroservice.Service.WeatherService;
+import com.example.weathermicroservice.Model.Main;
+import com.example.weathermicroservice.Model.Root;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+
 @RestController
-@RequestMapping("/weather")
 public class WeatherController {
-    private WeatherService weatherService;
 
-    public WeatherController(WeatherService weatherService) {
-        this.weatherService = weatherService;
-    }
-    @GetMapping("/{latitude}/{longitude}")
-    public Weather getWeather(@PathVariable double latitude, @PathVariable double longitude, @Value("${openweathermap.apiKey}") String apiKey) {
-        try {
-            Call<Weather> call = weatherService.getWeatherByCoordinates(latitude, longitude, apiKey);
-            Response<Weather> response = call.execute();
+    @Autowired
+    private RestTemplate restTemplate;
+    @Value("${appid}")
+    private String appId;
+    @Value("${url.weather}")
+    private String urlWeather;
+    @Autowired
+    private CacheManager cacheManager;
 
-            if (response.isSuccessful()) {
-                return response.body();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    @GetMapping("/cache")
+    public Map<Object, Object> getCache() {
+        ConcurrentMapCache cache = (ConcurrentMapCache) cacheManager.getCache("weather");
+        if (cache != null) {
+            ConcurrentMap<Object, Object> map = cache.getNativeCache();
+            return map;
+        } else {
+            return Map.of();
         }
-
-        return null;
+    }
+    @Cacheable(value = "weather", key = "#lat.concat(':').concat(#lon)")
+    @GetMapping
+    public Main getWeather(@RequestParam String lat, @RequestParam String lon) {
+        String request = String.format("%s?lat=%s&lon=%s&units=metric&appid=%s",
+                urlWeather, lat, lon, appId);
+        return restTemplate.getForObject(request, Root.class).getMain();
+    }
+    @Scheduled(fixedRate = 60000)
+    @CacheEvict(value = "weather", allEntries = true)
+    public void cacheEvict() {
     }
 }
