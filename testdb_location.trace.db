@@ -1,0 +1,16 @@
+2023-11-22 17:28:55 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "LOCATION" не найдена
+Table "LOCATION" not found; SQL statement:
+SELECT * FROM LOCATION [42102-214]
+2023-11-22 17:28:59 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "NAME" не найдена
+Table "NAME" not found; SQL statement:
+SELECT * FROM NAME [42102-214]
+2023-11-22 17:29:12 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "NAME" не найдена
+Table "NAME" not found; SQL statement:
+SELECT * FROM NAME [42102-214]
+2023-11-22 17:29:19 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "LON" не найдена
+Table "LON" not found; SQL statement:
+SELECT * FROM LON [42102-214]
