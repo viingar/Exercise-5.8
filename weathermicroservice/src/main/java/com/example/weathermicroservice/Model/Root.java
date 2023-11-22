@@ -10,9 +10,9 @@ import java.util.ArrayList;
 @Data
 public class Root {
     public Coord coord;
-    public ArrayList<Weather> weather;
-    public String base;
     public Main main;
+    public String base;
+    public ArrayList<Weather> weather;
     public int visibility;
     public Wind wind;
     public Clouds clouds;

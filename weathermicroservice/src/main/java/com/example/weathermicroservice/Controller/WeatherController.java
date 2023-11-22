@@ -1,7 +1,9 @@
 package com.example.weathermicroservice.Controller;
 
+
 import com.example.weathermicroservice.Model.Main;
 import com.example.weathermicroservice.Model.Root;
+import com.example.weathermicroservice.Model.Weather;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -20,6 +22,7 @@ import java.util.concurrent.ConcurrentMap;
 
 @RestController
 public class WeatherController {
+
 
     @Autowired
     private RestTemplate restTemplate;
@@ -43,6 +46,7 @@ public class WeatherController {
     @Cacheable(value = "weather", key = "#lat.concat(':').concat(#lon)")
     @GetMapping
     public Main getWeather(@RequestParam String lat, @RequestParam String lon) {
+
         String request = String.format("%s?lat=%s&lon=%s&units=metric&appid=%s",
                 urlWeather, lat, lon, appId);
         return restTemplate.getForObject(request, Root.class).getMain();

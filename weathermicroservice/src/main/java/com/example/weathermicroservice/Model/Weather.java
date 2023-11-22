@@ -6,16 +6,19 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 
+@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class Weather {
-    public int id;
-    public String main;
-    public String description;
-    public String icon;
-    
-
+    @Id
+    @GeneratedValue
+    int id;
+    @NonNull
+    private double lon;
+    @NonNull private double lat;
+    @NonNull private String name;
 }

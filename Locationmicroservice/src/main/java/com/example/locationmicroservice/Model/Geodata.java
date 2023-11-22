@@ -9,20 +9,15 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class Location {
+public class Geodata {
     @Id
     @GeneratedValue
-    private int id;
-
-    private String location;
-
-    private int latitude;
-
-    private int longitude;
-
-
-
+    int id;
+    @NonNull
+    private double lon;
+    @NonNull private double lat;
+    @NonNull private String name;
 }

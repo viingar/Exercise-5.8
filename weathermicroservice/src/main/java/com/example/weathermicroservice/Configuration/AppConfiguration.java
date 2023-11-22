@@ -1,5 +1,6 @@
 package com.example.weathermicroservice.Configuration;
 
+
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
@@ -20,4 +21,6 @@ public class AppConfiguration {
     public ConcurrentMapCacheManager cacheManager() {
         return new ConcurrentMapCacheManager("weather");
     }
+
+
 }
