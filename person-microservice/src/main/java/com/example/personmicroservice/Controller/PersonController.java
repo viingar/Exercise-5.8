@@ -1,6 +1,7 @@
 package com.example.personmicroservice.Controller;
 
 import com.example.personmicroservice.Model.Person;
+import com.example.personmicroservice.Model.Weather;
 import com.example.personmicroservice.Repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
-@Service
 @RestController
 @RequestMapping("/person")
 public class PersonController {
@@ -19,13 +19,24 @@ public class PersonController {
     private PersonRepository repository;
     @Autowired
     private RestTemplate restTemplate;
+
+    @GetMapping("{id}/weather")
+    public ResponseEntity<Weather> getWeather(@PathVariable int id) {
+        if (repository.existsById(id)) {
+            String location = repository.findById(id).get().getLocation();
+            Weather weather = restTemplate.getForObject("http://localhost:8072/weather?location=" + location, Weather.class);
+            return new ResponseEntity(weather, HttpStatus.OK);
+        }
+        return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping
     public Iterable<Person> findAll() {
         return repository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Person> findById(@PathVariable int id) {
+    public Optional<Person> findById(int id) {
         return repository.findById(id);
     }
 

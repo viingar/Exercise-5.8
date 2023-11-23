@@ -3,7 +3,6 @@ package com.example.weathermicroservice.Controller;
 
 import com.example.weathermicroservice.Model.Main;
 import com.example.weathermicroservice.Model.Root;
-import com.example.weathermicroservice.Model.Weather;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -11,12 +10,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import retrofit2.Call;
-import retrofit2.Response;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
